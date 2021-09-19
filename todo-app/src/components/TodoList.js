@@ -32,6 +32,8 @@ function TodoList() {
     setTodos(removeArr);
   };
 
+  const showDesc = (id) => {};
+
   const completeTodo = (id) => {
     let updatedTodos = todos.map((todo) => {
       if (todo.id === id) {
@@ -51,6 +53,7 @@ function TodoList() {
         completeTodo={completeTodo}
         removeTodo={removeTodo}
         updateTodo={updateTodo}
+        showDesc={showDesc}
       />
     </div>
   );

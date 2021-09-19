@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import TodoForm from "./TodoForm";
-import TodoList from "./TodoList";
+import CustomToggle from "./CustomToggle";
 import { RiCloseCircleLine } from "react-icons/ri";
-import { TiEdit } from "react-icons/ti";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import { Accordion, Card } from "react-bootstrap";
 
 function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
   const [edit, setEdit] = useState({
@@ -23,24 +24,37 @@ function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
   }
 
   return todos.map((todo, index) => (
-    <div
-      className={todo.isComplete ? "todo-row complete" : "todo-row"}
-      key={index}
-    >
-      <div key={todo.id} onClick={() => completeTodo(todo.id)}>
-        {todo.title}
-      </div>
-      <div className="icons">
-        <RiCloseCircleLine
-          onClick={() => removeTodo(todo.id)}
-          className="delete-icon"
-        />
-        <TiEdit
-          onClick={() => setEdit({ id: todo.id, value: todo.title })}
-          className="edit-icon"
-        />
-      </div>
-    </div>
+    <Accordion key={index}>
+      <Card
+        className={todo.isComplete ? "todo-row complete px-0" : "todo-row px-0"}
+      >
+        <div className="col-12">
+          <span
+            key={todo.id}
+            className="d-inline-flex col-10"
+            onClick={() => updateTodo(todo.id)}
+          >
+            {todo.title}
+          </span>
+
+          <RiCloseCircleLine
+            onClick={() => removeTodo(todo.id)}
+            className="delete-icon"
+          />
+          <AiOutlineCheckCircle
+            onClick={() => completeTodo(todo.id)}
+            className="delete-icon"
+          />
+          <CustomToggle eventKey={index} />
+        </div>
+
+        <Accordion.Collapse eventKey={index}>
+          <Card.Body className="d-inline-flex col-12">
+            {todo.description}
+          </Card.Body>
+        </Accordion.Collapse>
+      </Card>
+    </Accordion>
   ));
 }
 
