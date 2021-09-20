@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="todo-app">
       <TodoList />
-      <Modal show={false} />
+      <Modal />
     </div>
   );
 }

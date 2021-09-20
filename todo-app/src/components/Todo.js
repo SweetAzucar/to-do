@@ -1,28 +1,11 @@
-import React, { useState } from "react";
-import TodoForm from "./TodoForm";
+import React from "react";
 import CustomToggle from "./CustomToggle";
 import { RiCloseCircleLine } from "react-icons/ri";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { Accordion, Card } from "react-bootstrap";
+import ReactMarkdown from "react-markdown";
 
-function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
-  const [edit, setEdit] = useState({
-    id: null,
-    value: "",
-  });
-
-  const submitUpdate = (value) => {
-    updateTodo(edit.id, value);
-    setEdit({
-      id: null,
-      value: "",
-    });
-  };
-
-  if (edit.id) {
-    return <TodoForm edit={edit} onSubmit={submitUpdate} />;
-  }
-
+function Todo({ todos, completeTodo, removeTodo, toggleModal }) {
   return todos.map((todo, index) => (
     <Accordion key={index}>
       <Card
@@ -32,7 +15,7 @@ function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
           <span
             key={todo.id}
             className="d-inline-flex col-10"
-            onClick={() => updateTodo(todo.id)}
+            onClick={() => toggleModal(todo.id)}
           >
             {todo.title}
           </span>
@@ -50,7 +33,7 @@ function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
 
         <Accordion.Collapse eventKey={index}>
           <Card.Body className="d-inline-flex col-12">
-            {todo.description}
+            <ReactMarkdown>{todo.description}</ReactMarkdown>
           </Card.Body>
         </Accordion.Collapse>
       </Card>
