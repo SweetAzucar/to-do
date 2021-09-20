@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-function TodoForm(props) {
-  const [input, setInput] = useState(props.edit ? props.edit.value : "");
+function TodoForm({ onSubmit, edit }) {
+  const [input, setInput] = useState(edit ? edit.value : "");
 
   const inputRef = useRef(null);
 
@@ -17,19 +17,21 @@ function TodoForm(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    props.onSubmit({
-      id: uuidv4(),
-      title: input,
-      description: "",
-      isComplete: false,
-    });
+    if (input.trim()) {
+      onSubmit({
+        id: uuidv4(),
+        title: input,
+        description: "",
+        isComplete: false,
+      });
 
-    setInput("");
+      setInput("");
+    }
   };
 
   return (
     <form className="todo-form" onSubmit={handleSubmit}>
-      {props.edit ? (
+      {edit ? (
         <>
           <input
             type="text"
